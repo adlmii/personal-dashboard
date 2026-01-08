@@ -1,102 +1,60 @@
 @import "tailwindcss";
 
-/* --- CUSTOM CALENDAR STYLES (DARK MODE) --- */
+/* Styling Override untuk React Calendar Dark Mode */
 .react-calendar {
-  width: 100%;
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  line-height: 1.125em;
-}
-
-/* Header (Bulan & Tahun) */
-.react-calendar__navigation {
-  display: flex;
-  height: 44px;
-  margin-bottom: 1em;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  font-family: inherit !important;
 }
 
 .react-calendar__navigation button {
+  color: #e2e8f0 !important; /* slate-200 */
   min-width: 44px;
   background: none;
-  font-size: 1.25rem; /* text-xl */
-  font-weight: 700;
-  color: #e2e8f0; /* text-slate-200 */
-  border-radius: 0.75rem; /* rounded-xl */
-  transition: all 0.2s;
-}
-
-.react-calendar__navigation button:disabled {
-  background-color: transparent;
-  opacity: 0.5;
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: #334155; /* bg-slate-700 */
-}
-
-/* Hari (Senin, Selasa, dst) */
-.react-calendar__month-view__weekdays {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.75em;
-  color: #94a3b8; /* text-slate-400 */
-  margin-bottom: 0.5rem;
+  background-color: rgba(30, 41, 59, 0.5) !important; /* slate-800/50 */
+  border-radius: 0.75rem;
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
-  text-decoration: none; 
+  color: #64748b !important; /* slate-500 */
+  text-decoration: none !important;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-.react-calendar__month-view__weekdays__weekday abbr {
-  text-decoration: none;
-  cursor: default;
-}
-
-/* Tanggal (Tiles) */
 .react-calendar__tile {
-  max-width: 100%;
-  padding: 14px 6px;
-  background: none;
-  text-align: center;
-  line-height: 16px;
+  color: #cbd5e1; /* slate-300 */
+  padding: 1.5rem 0.5rem !important;
   font-weight: 500;
-  font-size: 1rem;
-  color: #cbd5e1; /* text-slate-300 */
-  border-radius: 0.75rem; /* rounded-xl */
-  transition: all 0.2s;
 }
 
 .react-calendar__tile:disabled {
-  background-color: transparent;
-  opacity: 0.3;
+  background-color: transparent !important;
+  color: #334155 !important; /* slate-700 */
 }
 
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
-  background-color: #334155; /* bg-slate-700 */
-  color: white;
-}
-
-/* Tanggal Hari Ini (Highlight Kuning/Amber) */
+/* Hilangkan garis default hari ini jika ingin custom */
 .react-calendar__tile--now {
-  background: #475569 !important; /* bg-slate-600 */
-  color: #fbbf24 !important; /* text-amber-400 */
+  background: transparent !important;
+  color: #60a5fa !important; /* blue-400 */
   font-weight: bold;
 }
 
-/* Tanggal Terpilih (Highlight Biru) */
 .react-calendar__tile--active {
-  background: #2563eb !important; /* bg-blue-600 */
+  background: #2563eb !important; /* blue-600 */
   color: white !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  border-radius: 0.75rem !important;
 }
 
-/* Sembunyikan tombol double arrow (<< dan >>) agar bersih */
-.react-calendar__navigation__next2-button,
-.react-calendar__navigation__prev2-button {
-  display: none;
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #1d4ed8 !important; /* blue-700 */
 }

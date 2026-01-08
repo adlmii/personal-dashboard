@@ -2,38 +2,49 @@ import { Sun, Cloud, Wind, CloudRain, Snowflake, CloudLightning, MapPin } from "
 
 export default function WeatherWidget({ weather }) {
   const getWeatherInfo = (code) => {
-    if (code === 0) return { icon: <Sun className="w-8 h-8 text-yellow-300" />, label: "Cerah", bg: "from-blue-400 to-blue-600" };
-    if (code >= 1 && code <= 3) return { icon: <Cloud className="w-8 h-8 text-gray-200" />, label: "Berawan", bg: "from-slate-500 to-slate-700" };
-    if (code >= 45 && code <= 48) return { icon: <Wind className="w-8 h-8 text-slate-300" />, label: "Berkabut", bg: "from-gray-500 to-gray-700" };
-    if (code >= 51 && code <= 67) return { icon: <CloudRain className="w-8 h-8 text-blue-200" />, label: "Hujan", bg: "from-indigo-600 to-blue-800" };
-    if (code >= 71 && code <= 77) return { icon: <Snowflake className="w-8 h-8 text-white" />, label: "Salju", bg: "from-cyan-600 to-blue-800" };
-    if (code >= 80 && code <= 82) return { icon: <CloudRain className="w-8 h-8 text-blue-200" />, label: "Hujan Deras", bg: "from-blue-700 to-indigo-900" };
-    if (code >= 95) return { icon: <CloudLightning className="w-8 h-8 text-yellow-400" />, label: "Badai Petir", bg: "from-slate-700 to-slate-900" };
-    return { icon: <Cloud className="w-8 h-8" />, label: "Mendung", bg: "from-indigo-600 to-purple-700" };
+    // Kita gunakan palette yang konsisten (Indigo/Slate) untuk background
+    // Tapi ikonnya tetap berwarna agar informatif
+    if (code === 0) return { icon: <Sun className="w-10 h-10 text-amber-400" />, label: "Cerah", desc: "Langit Bersih" };
+    if (code >= 1 && code <= 3) return { icon: <Cloud className="w-10 h-10 text-slate-300" />, label: "Berawan", desc: "Sejuk" };
+    if (code >= 51 && code <= 67) return { icon: <CloudRain className="w-10 h-10 text-blue-300" />, label: "Hujan", desc: "Sedia Payung" };
+    if (code >= 95) return { icon: <CloudLightning className="w-10 h-10 text-yellow-400" />, label: "Badai", desc: "Waspada" };
+    return { icon: <Wind className="w-10 h-10 text-slate-400" />, label: "Mendung", desc: "Berangin" };
   };
 
   const info = getWeatherInfo(weather.code);
 
   return (
-    <div className={`bg-linear-to-br ${info.bg} rounded-3xl p-6 shadow-xl text-white flex flex-col justify-between relative overflow-hidden transition-colors duration-700`}>
-      <div className="absolute -right-6 -bottom-6 opacity-20 transform scale-150 text-white mix-blend-overlay">
+    <div className="relative overflow-hidden rounded-3xl bg-indigo-600 p-6 text-white shadow-lg shadow-indigo-900/20 group">
+      {/* Background decoration */}
+      <div className="absolute -right-6 -top-6 opacity-10 transform scale-150 rotate-12 transition-transform duration-700 group-hover:scale-175">
         {info.icon}
       </div>
-      <div className="flex justify-between items-start z-10">
-        <div className="bg-white/20 backdrop-blur-md p-2 rounded-xl shadow-lg">
-          {weather.loading ? (
-            <div className="w-8 h-8 animate-spin rounded-full border-2 border-t-transparent border-white"></div>
-          ) : (
-            info.icon
-          )}
+      
+      <div className="relative z-10 flex flex-col justify-between h-full">
+        <div className="flex items-start justify-between">
+          <div className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 shadow-inner">
+            {weather.loading ? (
+              <div className="w-10 h-10 animate-spin rounded-full border-2 border-t-transparent border-white/50"></div>
+            ) : (
+              info.icon
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/20 backdrop-blur-md text-xs font-medium border border-white/5">
+            <MapPin className="w-3 h-3" />
+            <span>Lokasi Anda</span>
+          </div>
         </div>
-        <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-          <MapPin className="w-3 h-3" /> {weather.isJakarta ? "Jakarta" : "Lokasi Anda"}
-        </span>
-      </div>
-      <div className="z-10 mt-4">
-        <span className="text-5xl font-bold tracking-tight">{weather.temp}°</span>
-        <p className="text-indigo-100 mt-1 font-medium">{info.label}</p>
+        
+        <div className="mt-4">
+          <div className="flex items-baseline gap-1">
+            <span className="text-5xl font-bold tracking-tighter">{weather.temp}°</span>
+            <span className="text-indigo-200 text-lg">C</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold">{info.label}</span>
+            <span className="text-indigo-200 text-sm opacity-80">{info.desc}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
