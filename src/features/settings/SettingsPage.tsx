@@ -48,7 +48,7 @@ export function SettingsPage() {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-[var(--text-muted)]">Version</p>
-            <p className="font-medium">v0.1.0 (MVP)</p>
+            <p className="font-medium">v0.1.0 BETA</p>
           </div>
           <div>
             <p className="text-[var(--text-muted)]">Theme</p>
@@ -59,7 +59,7 @@ export function SettingsPage() {
           </div>
           <div>
             <p className="text-[var(--text-muted)]">Developer</p>
-            <p className="font-medium">You</p>
+            <p className="font-medium">adlmii</p>
           </div>
           <div>
             <p className="text-[var(--text-muted)]">Tech Stack</p>
@@ -87,7 +87,7 @@ export function SettingsPage() {
         >
           {isResetting ? (
             <>
-              <Trash2 size={16} /> Click again to CONFIRM WIPE
+              <Trash2 size={16} /> Click again to CONFIRM
             </>
           ) : (
             <>

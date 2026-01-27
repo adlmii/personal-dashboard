@@ -1,331 +1,159 @@
-# Product Requirements Document (PRD)
-## Personal Dashboard Desktop App (MVP)
-**Product Name:** FocusDeck  
-**Platform:** Desktop (Windows / macOS via Tauri)  
-**Status:** MVP (v0.1)
+# 🧠 Product Requirements Document (PRD)
+## FocusDeck — Personal Focus Dashboard (Desktop)
+
+**Platform:** Desktop (Windows / macOS)  
+**Stage:** MVP → Daily-use Ready  
+**Philosophy:** Less features, more focus
 
 ---
 
-## 1. Product Overview
+## 🎯 Problem yang Mau Disolve
 
-### 1.1 Problem Statement
 Banyak orang:
-- punya terlalu banyak task
-- sulit menentukan fokus harian
-- tidak sadar berapa lama mereka benar-benar fokus
+- punya banyak task
+- kerja lama tapi ga tau **beneran fokus berapa**
+- kebanyakan productivity tools malah bikin ribet
 
-Aplikasi produktivitas yang ada:
-- terlalu kompleks
-- terlalu banyak fitur
-- atau justru terlalu dangkal
+Masalah intinya:
 
-**Masalah utama:**  
-Tidak ada *simple daily command center* yang:
-- membatasi fokus
-- mencatat usaha (waktu)
-- terasa tenang dipakai setiap hari
+> User sulit menjaga fokus harian yang realistis dan tidak punya feedback sederhana tentang progresnya.
 
----
+Tool yang ada sekarang:
+- terlalu kompleks (Notion, ClickUp)
+- atau terlalu dangkal (todo list doang)
+- atau timer doang tanpa konteks task
 
-### 1.2 Product Vision
-Membuat **personal command center** untuk fokus harian yang:
-- sederhana
-- tenang
-- bisa dipercaya
-
-> Fokus bukan soal mengerjakan banyak hal,  
-> tapi memilih sedikit hal yang penting — dan benar-benar mengerjakannya.
+FocusDeck hadir untuk **menyatukan task + fokus + feedback**  
+tanpa noise dan tanpa beban mental.
 
 ---
 
-### 1.3 Target User
+## 👤 Target User
+
+### Primary User
 - Individual knowledge worker
-- Developer / designer / student
-- Solo worker yang:
-  - kerja mandiri
-  - butuh struktur ringan
-  - tidak mau setup ribet
+- Developer, designer, student, indie maker
+- Kerja di laptop, duduk lama, sering “sibuk tapi ga maju”
 
-**Non-goal user:**
-- Team collaboration
-- Project management skala besar
-- Enterprise workflow
+### Karakteristik User
+- Ga mau ribet setup
+- Lebih suka **local-first**
+- Tidak peduli fitur fancy
+- Peduli: **tenang, fokus, dan konsisten**
 
 ---
 
-## 2. Core Value Proposition
+## ⭐ Fitur Utama (MVP Scope)
 
-### 2.1 Value Utama
-1. **Clarity** — tau fokus hari ini
-2. **Constraint** — maksimal 3 task
-3. **Awareness** — tau berapa lama fokus
-4. **Calm UX** — tidak mengganggu flow
+### 1️⃣ Task Management (Simple & Tegas)
 
----
+- Tambah task ke backlog
+- Pilih **maksimal 3 task** sebagai fokus harian
+- Tandai task selesai
+- Hapus task dengan **Undo (toast)**
 
-## 3. MVP Scope
-
-### 3.1 In Scope (WAJIB)
-
-#### 3.1.1 Task Management
-- Add / delete task
-- Status:
-  - Backlog
-  - Today Focus (max 3)
-  - Done
-- Undo delete task
-
-#### 3.1.2 Focus Timer (Pomodoro)
-- Focus / short break / long break
-- Start / pause / reset
-- Auto-save session
-- Optional link ke task
-
-#### 3.1.3 Dashboard (Single Workspace)
-- Today Focus section
-- Backlog section
-- Timer widget
-- Daily stats:
-  - Focus minutes
-  - Tasks completed
-  - Daily progress %
-
-#### 3.1.4 UX Feedback
-- Non-blocking toast system
-- In-app feedback (bukan OS modal)
-- Undo action support
+**Tujuan:**  
+Mengurangi pilihan → meningkatkan fokus.
 
 ---
 
-### 3.2 Out of Scope (MVP LOCK)
-- Auth / login
-- Cloud sync
-- Calendar view
-- AI features
-- Team collaboration
-- Analytics kompleks
+### 2️⃣ Focus Timer (Pomodoro yang Waras)
+
+- Mode:
+  - Focus
+  - Short Break
+  - Long Break
+- Timer **akurat walaupun**:
+  - app di-minimize
+  - laptop sleep
+  - app di-reload
+- Session otomatis tercatat
+- Session bisa di-interrupt dengan aman
+
+**Tujuan:**  
+Fokus nyata, bukan timer palsu.
 
 ---
 
-## 4. User Experience & Navigation
+### 3️⃣ Daily Dashboard
 
-### 4.1 Navigation Principle
-- **Single primary workspace**
-- Minimal navigation
-- Sidebar tidak distract
+Menampilkan:
+- Today Focus (maks. 3 task)
+- Total menit fokus hari ini
+- Task selesai hari ini
+- Progress harian (%)
 
-
-### 4.2 Sidebar Behavior
-
-#### Default State
-- Sidebar **expanded** saat app dibuka pertama kali
-- Menampilkan:
-  - Icon
-  - Label
-- Tujuan: clarity untuk user baru
-
-#### Collapsed State
-- Sidebar bisa di-**collapse**
-- Hanya menampilkan **icon**
-- Lebar minimal, tidak mengganggu fokus
-
-#### Interaction Rules
-- Collapse / expand via:
-  - Klik tombol toggle
-  - Hover (opsional, configurable)
-- State sidebar **diingat** (persisted)
-
-#### UX Principle
-> Sidebar membantu navigasi,  
-> bukan jadi pusat perhatian.
+**Tujuan:**  
+User langsung ngerti kondisi hari ini tanpa mikir.
 
 ---
 
-### 4.3 Layout Principles
+### 4️⃣ Feedback & UX
 
-- Desktop-first
-- Single main content area
-- Tidak ada nested scroll yang membingungkan
-- Semua aksi penting bisa dijangkau **tanpa pindah halaman**
-
----
-
-## 5. Functional Requirements
-
-### 5.1 Task Management
-
-#### 5.1.1 Task Creation
-- User bisa menambahkan task via input cepat
-- Task default masuk ke **Backlog**
-- Tidak ada due date di MVP
-
-#### 5.1.2 Task States
-- `backlog` → task biasa
-- `today` → fokus hari ini (max 3)
-- `done` → selesai
-
-#### 5.1.3 Today Focus Rules
-- Maksimal **3 task**
-- Jika user menambah task ke-4:
-  - Aksi dibatalkan
-  - Toast error muncul
-
-#### 5.1.4 Task Completion
-- Task bisa ditandai `done`
-- Timestamp `completed_at` disimpan
-- Langsung mempengaruhi daily stats
-
----
-
-### 5.2 Focus Timer (Pomodoro)
-
-#### 5.2.1 Timer Modes
-- Focus
-- Short Break
-- Long Break
-
-Durasi default:
-- Focus: 25 menit
-- Short break: 5 menit
-- Long break: 15 menit
-
-#### 5.2.2 Timer Controls
-- Start
-- Pause
-- Reset
-- Mode hanya bisa diganti saat timer **tidak running**
-
-#### 5.2.3 Session Logging
-- Session otomatis tersimpan saat selesai
-- Field utama:
-  - duration
-  - started_at
-  - ended_at
-  - completed
-  - todo_id (optional)
-
----
-
-### 5.3 Dashboard & Daily Stats
-
-#### 5.3.1 Dashboard Content
-- Today Focus list
-- Backlog list
-- Timer widget
-- Stats cards
-
-#### 5.3.2 Stats Definition
-- Focus Minutes  
-  → total durasi session hari ini
-- Tasks Completed  
-  → jumlah task `done` hari ini
-- Daily Progress  
-  → persentase completed vs total task aktif
-
-#### 5.3.3 Data Behavior
-- Stats dihitung **runtime**
-- Tidak ada background job
-- Tidak ada cache kompleks
-
----
-
-## 6. Feedback & Notification System
-
-### 6.1 In-App Toast (Primary)
-
-#### Use Case
-- Error
-- Success
-- Undo action
-- Informational feedback
-
-#### Rules
-- Non-blocking
-- Auto dismiss
-- Action optional (Undo)
-
----
-
-### 6.2 OS Notification (Secondary)
-- Digunakan hanya untuk:
-  - Timer selesai
-- Jika OS notification mati:
-  - App **tetap usable**
-  - Tidak ada dependensi kritikal
-
----
-
-## 7. Persistence & Data Integrity
-
-### 7.1 Local-First Storage
-- Semua data disimpan lokal
-- App fully usable offline
-
-### 7.2 Data Consistency Rules
-- Task delete → bisa undo
-- Session save → tidak boleh duplikat
-- Interrupted session → tidak dihitung ke stats
-
----
-
-## 8. Reliability Requirements (Sprint 5 Anchor)
-
-### 8.1 Timer Reliability
-- Timer tetap akurat saat:
-  - App minimize
-  - Laptop sleep
-  - App reload
-
-### 8.2 Lifecycle Handling
-- App reopen saat timer aktif:
-  - Resume
-  - atau mark interrupted
-
----
-
-## 9. Accessibility & Comfort
-
-### 9.1 Visual Comfort
-- Warna hangat
-- Kontras aman
-- Tidak menyilaukan
-
-### 9.2 Cognitive Load
+- Toast non-blocking:
+  - success
+  - error
+  - info
+  - undo
+- Notifikasi OS hanya sebagai bonus
 - Tidak ada popup agresif
-- Tidak ada forced decision
-- Semua feedback bisa diabaikan tanpa konsekuensi
+- UI terang, hangat, dan tenang
 
 ---
 
-## 10. Release Criteria (MVP v0.1)
+## ❌ Out of Scope (Sengaja Tidak Masuk)
 
-Produk dianggap siap rilis jika:
-- Semua core flow berjalan
-- Tidak ada data loss
-- Timer reliable
-- UX non-blocking
-- Scope tidak bocor
+- Auth / Login
+- Cloud sync
+- Kalender kompleks
+- Reminder pintar
+- AI / rekomendasi
+- Kolaborasi / sharing
+- Mobile app
 
----
-
-## 11. Risks & Mitigation
-
-### Risk: Timer Tidak Akurat
-- Mitigation: timestamp-based calculation
-
-### Risk: User Overwhelm
-- Mitigation: max 3 Today Focus
-
-### Risk: Data Corruption
-- Mitigation: transactional DB + integrity rules
+> Semua ini ditunda untuk menjaga fokus produk dan codebase.
 
 ---
 
-## 12. Product Philosophy (Final)
+## 📈 Success Metrics
+
+MVP dianggap **sukses** jika:
+
+- User bisa pakai app **1 hari penuh tanpa bug**
+- Timer tidak bohong
+- Data task dan session tidak hilang
+- User ngerti:
+  - apa yang harus dikerjakan hari ini
+  - berapa lama dia benar-benar fokus
+
+### Strong Success Signal
+- App dibuka setiap pagi
+- Tidak butuh tutorial
+- Tidak ada rasa “ini ribet”
+
+---
+
+## 🧠 Product Principles
 
 1. Fokus itu dibatasi, bukan ditambah
-2. UX harus tenang, bukan rame
-3. Kepercayaan > fitur
-4. MVP ≠ mainan
+2. Lebih sedikit pilihan = lebih tenang
+3. Local-first lebih penting dari cloud-first
+4. UX harus diam, bukan teriak
+5. Kalau ragu, jangan tambah fitur
 
 ---
+
+## 🔥 Hot Take
+
+Kalau fitur:
+- tidak bikin user lebih fokus → **buang**
+- bikin codebase ribet tapi UX ga naik → **jangan masuk**
+
+---
+
+## 🏁 Status Produk
+
+- Core flow: ✅
+- Timer reliability: ✅
+- UX polish dasar: ✅
+- MVP daily-use ready: ✅

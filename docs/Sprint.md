@@ -191,64 +191,64 @@ Pastikan app **bisa dipercaya** dalam kondisi real-life.
 ### 🧩 EPIC 5.1 — Timer Lifecycle Refactor
 
 #### 5.1.1 Timestamp-based Timer
-- [ ] Ganti timer dari decrement per detik
-- [ ] Gunakan `startedAt` + `Date.now()`
-- [ ] Hitung elapsed time secara real-time
+- [x] Ganti timer dari decrement per detik
+- [x] Gunakan `startedAt` + `Date.now()`
+- [x] Hitung elapsed time secara real-time
 
 #### 5.1.2 Drift Prevention
-- [ ] `tick()` hanya trigger recalculation
-- [ ] Tidak ada manual `timeLeft -= 1`
+- [x] `tick()` hanya trigger recalculation
+- [x] Tidak ada manual `timeLeft -= 1`
 
 ---
 
 ### 🧩 EPIC 5.2 — Session Integrity
 
 #### 5.2.1 Prevent Double Save
-- [ ] Tambah flag `hasCompleted`
-- [ ] Pastikan 1 session = 1 DB row
+- [x] Tambah flag `hasCompleted`
+- [x] Pastikan 1 session = 1 DB row
 
 #### 5.2.2 Interrupted Session Handling
-- [ ] Tambah field:
+- [x] Tambah field:
   - `interrupted`
   - `interrupted_at`
-- [ ] Session incomplete tidak dihitung ke stats
+- [x] Session incomplete tidak dihitung ke stats
 
 ---
 
 ### 🧩 EPIC 5.3 — App Lifecycle
 
 #### 5.3.1 Persist Timer State
-- [ ] Simpan state timer (mode, status, startedAt)
-- [ ] Restore saat app reopen
+- [x] Simpan state timer (mode, status, startedAt)
+- [x] Restore saat app reopen
 
 #### 5.3.2 App Close Mid-session
-- [ ] Detect active session
-- [ ] Auto-resume atau mark interrupted
+- [x] Detect active session
+- [x] Auto-resume atau mark interrupted
 
 ---
 
 ### 🧩 EPIC 5.4 — UX Safety Net
 
 #### 5.4.1 Resume Prompt
-- [ ] Toast / prompt ringan:
+- [x] Toast / prompt ringan:
   > “Sesi fokus sebelumnya belum selesai. Lanjutkan?”
 
 #### 5.4.2 Silent Error Handling
-- [ ] DB / audio / notif error tidak crash app
-- [ ] Fallback ke toast ringan
+- [x] DB / audio / notif error tidak crash app
+- [x] Fallback ke toast ringan
 
 ---
 
 ### 🧩 EPIC 5.5 — Hardening & Testing
 
 #### 5.5.1 Lifecycle Testing
-- [ ] Minimize app
-- [ ] Laptop sleep
-- [ ] Reload / reopen
+- [x] Minimize app
+- [x] Laptop sleep
+- [x] Reload / reopen
 
 #### 5.5.2 Data Validation
-- [ ] Stats akurat
-- [ ] Tidak ada duplicate session
+- [x] Stats akurat
+- [x] Tidak ada duplicate session
 
 ---
 
