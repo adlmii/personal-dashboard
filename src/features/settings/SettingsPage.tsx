@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trash2, RefreshCw, Info, Github } from "lucide-react";
+import { Trash2, RefreshCw, Info } from "lucide-react";
 import { initDB } from "../../lib/db";
 import { useToastStore } from "../../lib/toast";
 
