@@ -269,6 +269,199 @@ Pastikan app **bisa dipercaya** dalam kondisi real-life.
 
 ---
 
+## 🟦🟦 SPRINT 6 — Re-assert Personal Dashboard Identity
+
+### Goal
+Mengembalikan makna **Dashboard sebagai orientation layer**,  
+bukan tempat kerja penuh distraksi.
+
+> Sprint ini **tidak menambah fitur**, hanya membagi peran layar dengan jelas.
+
+---
+
+### 🧩 EPIC 6.1 — Navigation & Page Responsibility
+
+#### 6.1.1 Sidebar Restructure
+- [ ] Sidebar menu:
+  - Dashboard
+  - Focus
+  - Tasks
+  - Settings
+- [ ] Active state jelas
+- [ ] Sidebar collapse / expand (click-based)
+
+**Acceptance Criteria**
+- User langsung paham perbedaan konteks tiap menu
+- Sidebar collapse tidak mengganggu flow
+
+---
+
+#### 6.1.2 Route Separation
+- [ ] `/dashboard`
+- [ ] `/focus`
+- [ ] `/tasks`
+- [ ] `/settings`
+
+**Rules**
+- Routing hanya mengubah context
+- Tidak ada business logic di route
+
+---
+
+### 🧩 EPIC 6.2 — Dashboard = Orientation Only
+
+#### 6.2.1 Dashboard Content Trim
+- [ ] Today Focus → summary view (read-only)
+- [ ] Timer → status ringkas (idle / running + remaining)
+- [ ] Stats → daily overview
+
+❌ Tidak ada:
+- Add task
+- Edit task
+- Full timer control
+
+---
+
+#### 6.2.2 Dashboard CTA
+- [ ] CTA utama:
+  - “Start Focus”
+  - “Review Tasks”
+- [ ] CTA navigasi ke page yang tepat
+
+**Acceptance Criteria**
+- Dashboard bisa dipahami < 5 detik
+- Tidak ada scroll panjang
+- Tidak ada decision fatigue
+
+---
+
+### 🧩 EPIC 6.3 — Focus Page (Execution Mode)
+
+#### 6.3.1 Focus Layout
+- [ ] Timer sebagai hero
+- [ ] Active task tunggal
+- [ ] Tidak tampilkan backlog
+- [ ] Tidak tampilkan stats
+
+---
+
+#### 6.3.2 Focus Safety UX
+- [ ] Visual noise diminimalisir
+- [ ] Toast lebih subtle saat focus
+- [ ] Pause / reset jelas dan aman
+
+**Acceptance Criteria**
+- Focus page terasa “sunyi”
+- Tidak ada accidental action
+
+---
+
+### 🧩 EPIC 6.4 — Tasks Page (Maintenance Mode)
+
+#### 6.4.1 Tasks Full Control
+- [ ] Backlog management
+- [ ] Today Focus management
+- [ ] Done list (optional collapse)
+
+---
+
+#### 6.4.2 Task Flow Polish
+- [ ] Feedback toast konsisten
+- [ ] Undo delete tetap tersedia
+- [ ] Interaction jelas (no ambiguity)
+
+---
+
+### 🧩 EPIC 6.5 — Copy & Micro-UX Alignment
+
+- [ ] Copy Dashboard → observasional
+- [ ] Copy Focus → instruktif
+- [ ] Copy Tasks → administratif
+- [ ] Tidak ada motivational spam
+
+---
+
+### ✅ Exit Criteria Sprint 6
+- Dashboard hanya untuk orientasi
+- Focus page untuk eksekusi
+- Tasks page untuk maintenance
+- User paham app ini **personal dashboard, bukan todo app biasa**
+
+---
+
+
+## 🟩🟩 SPRINT 7 — Daily Closure & Long-Term Trust
+
+### Goal
+Meningkatkan rasa **percaya & keterikatan jangka panjang**  
+tanpa menambah kompleksitas.
+
+---
+
+### 🧩 EPIC 7.1 — Passive Daily Closure
+
+#### 7.1.1 End-of-Day Summary
+- [ ] Summary otomatis (tanpa modal):
+  - Focus minutes
+  - Tasks completed
+- [ ] Tidak minta input user
+
+Contoh:
+> “Hari ini: 90 menit fokus · 3 task selesai”
+
+---
+
+#### 7.1.2 Daily Reset Logic
+- [ ] Today Focus reset otomatis tiap hari
+- [ ] Backlog tetap aman
+- [ ] Tidak menghapus data historis
+
+---
+
+### 🧩 EPIC 7.2 — Trust Reinforcement
+
+#### 7.2.1 Data Integrity Signals
+- [ ] Session incomplete tidak masuk stats
+- [ ] Tidak ada duplicate log
+- [ ] Stats konsisten antar reload
+
+---
+
+#### 7.2.2 Error Transparency
+- [ ] Silent failure → toast ringan
+- [ ] Tidak ada hard crash
+- [ ] App tetap usable walau ada error minor
+
+---
+
+### 🧩 EPIC 7.3 — Settings Finalization (Minimalist)
+
+- [ ] About / App philosophy
+- [ ] Notification explanation
+- [ ] Version info
+- [ ] Tidak ada toggle berlebihan
+
+---
+
+### ✅ Exit Criteria Sprint 7
+- User merasa app “ngerti ritme harian”
+- Tidak perlu mikir harus ngapain
+- App terasa stabil & bisa dipercaya
+
+---
+
+## 🚫 Out of Scope (Tetap Dikunci)
+
+- Auth
+- Cloud sync
+- Calendar view
+- Habit tracking
+- Analytics berat
+- AI / automation
+
+---
+
+
 ## 🏁 Global Definition of Done
 
 Sebuah task dianggap DONE jika:
