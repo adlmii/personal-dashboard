@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Play, Pause, RotateCcw, Coffee, Brain, Zap } from "lucide-react";
-import { sendNotification } from "@tauri-apps/plugin-notification";
 import { useTimerStore } from "../store";
 import { useTimerTick } from "../hooks";
 import { cn } from "../../../lib/utils";
@@ -10,6 +9,7 @@ export function TimerWidget() {
   useTimerTick();
   const { timeLeft, status, mode, setMode, start, pause, reset } = useTimerStore();
   const { addToast } = useToastStore();
+  const hasNotifiedRef = useRef(false);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -24,26 +24,23 @@ export function TimerWidget() {
   };
 
   useEffect(() => {
-    if (timeLeft !== 0) return;
-    if (status !== 'idle') return;
-    if (timeLeft === 0 && status === 'idle') {
-      
-      const audio = new Audio('/bell.mp3');
-      audio.play().catch(e => console.error("Gagal putar audio:", e));
-
-      try {
-        sendNotification({
-          title: "Personal Dashboard",
-          body: mode === 'focus' ? "Sesi Fokus Selesai! Kerja bagus. 🎉" : "Istirahat Selesai! Yuk gas lagi. 🚀",
-        });
-      } catch (err) {
-        console.log("Notifikasi skip (plugin belum setup)");
-      }
-      addToast(
-        mode === 'focus' ? "Focus session finished! Time to break. ☕" : "Break finished! Back to work. 🚀",
-        "info"
-      );
+  if (status === 'running' || timeLeft > 0) {
+    hasNotifiedRef.current = false;
     }
+  }, [status, timeLeft]);
+
+  useEffect(() => {
+    if (timeLeft !== 0 || status !== 'idle') return;
+    if (hasNotifiedRef.current) return;
+
+    hasNotifiedRef.current = true;
+
+    addToast(
+      mode === 'focus'
+        ? "Focus session finished! Time to break. ☕"
+        : "Break finished! Back to work. 🚀",
+      "info"
+    );
   }, [timeLeft, status, mode]);
 
   return (
