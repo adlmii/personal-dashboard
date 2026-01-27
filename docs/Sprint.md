@@ -6,44 +6,44 @@
 ## 📌 Sprint Strategy
 
 ### Prinsip Utama
-- Kerjakan **fondasi → core value → UX polish**
-- Jangan sentuh feature tambahan sebelum MVP “usable harian”
-- Setiap sprint harus hasilin sesuatu yang **bisa dipakai**
+- Kerjakan **fondasi → core value → daily usability → trust**
+- Jangan sentuh feature tambahan sebelum app **usable harian & reliable**
+- Setiap sprint harus hasilin sesuatu yang **bisa dipakai tanpa mikir**
 
 ### Sprint Length
 - 1 sprint = 1 minggu (solo dev friendly)
-- Total MVP target: **4 sprint**
+- MVP target: **Sprint 0 – Sprint 5**
 
 ---
 
-## 🟦 SPRINT 0 — Setup & Foundation (Wajib)
+## 🟦 SPRINT 0 — Setup & Foundation (WAJIB)
 
 ### Goal
-Project siap dikembangkan tanpa technical debt dari awal.
+Project siap dikembangkan tanpa technical debt.
 
 ### Tasks
 
 #### 0.1 Project Setup
 - [x] Init repo (Git)
-- [x] Setup Tauri + React
-- [x] Setup Tailwind
+- [x] Setup Tauri + React + TypeScript
+- [x] Setup Tailwind CSS
 - [x] Base layout app shell
-- [x] Global styling (font, color tokens)
+- [x] Global styling (font, CSS variables, color tokens)
 
 #### 0.2 Architecture Decision
-- [x] Tentukan folder structure
-- [x] Tentukan state management (Zustand installed)
-- [x] Tentukan local storage strategy (SQLite installed & connected)
+- [x] Folder structure
+- [x] State management (Zustand)
+- [x] Local DB strategy (SQLite via tauri-plugin-sql)
 
 #### 0.3 Dev Experience
 - [x] Linting & formatting
-- [] Environment config
+- [ ] Environment config
 - [x] Hot reload confirm
 
 ✅ **Exit Criteria Sprint 0**
 - App bisa dibuka
 - UI shell muncul
-- Tidak ada fitur, tapi fondasi rapi
+- Fondasi rapi, belum ada fitur
 
 ---
 
@@ -55,14 +55,14 @@ User bisa **mencatat dan memilih fokus harian**
 ### Tasks
 
 #### 1.1 Todo Data Layer
-- [x] Implement Todo model
+- [x] Todo model
 - [x] CRUD Todo (local)
 - [x] Status: backlog / today / done
 
 #### 1.2 Backlog UI
 - [x] Add todo form
 - [x] List backlog
-- [x] Edit & delete todo
+- [x] Delete todo
 
 #### 1.3 Today Focus Logic
 - [x] Set task as Today Focus
@@ -72,12 +72,12 @@ User bisa **mencatat dan memilih fokus harian**
 #### 1.4 Today Focus UI
 - [x] Today Focus card
 - [x] Visual priority
-- [x] Empty state (“Plan Your Day”)
+- [x] Empty state
 
 ✅ **Exit Criteria Sprint 1**
 - User bisa:
   - Nambah task
-  - Pilih max 3 task
+  - Pilih max 3 fokus
   - Tandai selesai
 
 ---
@@ -85,134 +85,206 @@ User bisa **mencatat dan memilih fokus harian**
 ## 🟨 SPRINT 2 — Pomodoro Engine
 
 ### Goal
-User bisa **fokus kerja dan waktu tercatat**
+User bisa **fokus kerja dan waktu tercatat otomatis**
 
 ### Tasks
 
 #### 2.1 Pomodoro Core Logic
-- [x] Timer engine (focus/break)
-- [x] Start / pause / stop
+- [x] Timer engine (focus / short break / long break)
+- [x] Start / pause / reset
 - [x] Session completion handling
 
 #### 2.2 Pomodoro Data Layer
 - [x] PomodoroSession model
-- [x] Auto log session
-- [x] Link session ke Todo (optional)
+- [x] Auto log session ke DB
+- [x] Optional link ke Todo
 
 #### 2.3 Pomodoro UI
 - [x] Timer display
-- [x] Active task display
+- [x] Mode selector
 - [x] Action buttons
 
 #### 2.4 Flow Integration
-- [x] Start pomodoro from Today Focus
-- [x] Post-session modal (continue / break / switch)
+- [x] Timer berjalan berdampingan dengan Today Focus
+- [x] Session auto-save
 
 ✅ **Exit Criteria Sprint 2**
-- User bisa:
-  - Start focus dari task
-  - Menyelesaikan session
-  - Data tercatat otomatis
+- User bisa fokus
+- Session tersimpan otomatis
+- Tidak perlu input manual
 
 ---
 
 ## 🟧 SPRINT 3 — Dashboard & Daily Experience
 
 ### Goal
-User **melihat progres & nyaman dipakai harian**
+User **punya satu command center harian**
 
 ### Tasks
 
 #### 3.1 Dashboard Layout
-- [ ] Bento grid layout
-- [ ] Responsive desktop sizing
-- [ ] No-scroll main view
+- [x] Bento-style layout
+- [x] Desktop-first sizing
+- [x] Single main workspace (no page hopping)
 
 #### 3.2 Dashboard Cards
-- [ ] Today Focus card (final)
-- [ ] Active Pomodoro card
-- [ ] Daily Progress card
-- [ ] Mini stats card
+- [x] Today Focus section
+- [x] Backlog section
+- [x] Timer widget
+- [x] Stats cards (focus minutes, tasks done, progress)
 
 #### 3.3 Derived Data
-- [ ] Hitung focus minutes
-- [ ] Hitung completed task
-- [ ] Daily aggregation (runtime)
-
-#### 3.4 Daily Wrap-up
-- [ ] End-of-day summary
-- [ ] Optional mood input
-- [ ] Reset Today Focus next day
+- [x] Hitung focus minutes (runtime)
+- [x] Hitung completed tasks
+- [x] Daily aggregation tanpa duplikasi data
 
 ✅ **Exit Criteria Sprint 3**
 - App bisa dipakai **1 hari penuh**
 - User ngerti:
-  - Fokus hari ini
-  - Progresnya
+  - Apa yang difokuskan
+  - Sudah sejauh mana progres
 
 ---
 
-## 🟥 SPRINT 4 — Polish & Hardening (Optional tapi recommended)
+## 🟥 SPRINT 4 — UX Polish & Interaction Quality
 
 ### Goal
-Bikin app **nyaman & stabil**
+Bikin app **tenang, hangat, dan manusiawi**
 
 ### Tasks
 
-#### 4.1 UX Polish
-- [ ] Empty states
-- [ ] Loading states
-- [ ] Micro-interactions
+#### 4.1 Theme System
+- [x] CSS variable–based theme
+- [x] Warm light theme
+- [x] Konsisten di seluruh komponen
 
-#### 4.2 Stability
-- [ ] Edge case timer
-- [ ] App close / reopen handling
-- [ ] Data persistence check
+#### 4.2 UX Feedback
+- [x] Toast system (non-blocking)
+- [x] Replace alert / confirm
+- [x] Undo delete task
 
-#### 4.3 Performance
-- [ ] Render optimization
-- [ ] Storage read/write optimization
+#### 4.3 Interaction Polish
+- [x] Hover & active states
+- [x] Empty states copy
+- [x] Disable noisy UI saat focus
 
-#### 4.4 Release Prep
-- [ ] App icon
-- [ ] Basic README
-- [ ] MVP release build
+#### 4.4 Navigation Simplification
+- [x] Sidebar simplified (Dashboard + Settings)
+- [x] Dashboard sebagai single workspace
 
 ✅ **Exit Criteria Sprint 4**
-- App stabil
-- Siap dipakai harian
-- No critical bug
+- Tidak ada blocking UX
+- Feedback jelas & tenang
+- App terasa “dewasa”
 
 ---
 
-## 🧠 Priority Rules (IMPORTANT)
+## 🟦🟦 SPRINT 5 — Stability, Lifecycle & Trust (WAJIB SEBELUM RILIS)
 
-### DO FIRST
-- Todo → Today Focus → Pomodoro
+### Goal
+Pastikan app **bisa dipercaya** dalam kondisi real-life.
 
-### DO NOT TOUCH (MVP)
+> Sprint ini fokus ke engineering reliability, bukan UI.
+
+---
+
+### 🧩 EPIC 5.1 — Timer Lifecycle Refactor
+
+#### 5.1.1 Timestamp-based Timer
+- [ ] Ganti timer dari decrement per detik
+- [ ] Gunakan `startedAt` + `Date.now()`
+- [ ] Hitung elapsed time secara real-time
+
+#### 5.1.2 Drift Prevention
+- [ ] `tick()` hanya trigger recalculation
+- [ ] Tidak ada manual `timeLeft -= 1`
+
+---
+
+### 🧩 EPIC 5.2 — Session Integrity
+
+#### 5.2.1 Prevent Double Save
+- [ ] Tambah flag `hasCompleted`
+- [ ] Pastikan 1 session = 1 DB row
+
+#### 5.2.2 Interrupted Session Handling
+- [ ] Tambah field:
+  - `interrupted`
+  - `interrupted_at`
+- [ ] Session incomplete tidak dihitung ke stats
+
+---
+
+### 🧩 EPIC 5.3 — App Lifecycle
+
+#### 5.3.1 Persist Timer State
+- [ ] Simpan state timer (mode, status, startedAt)
+- [ ] Restore saat app reopen
+
+#### 5.3.2 App Close Mid-session
+- [ ] Detect active session
+- [ ] Auto-resume atau mark interrupted
+
+---
+
+### 🧩 EPIC 5.4 — UX Safety Net
+
+#### 5.4.1 Resume Prompt
+- [ ] Toast / prompt ringan:
+  > “Sesi fokus sebelumnya belum selesai. Lanjutkan?”
+
+#### 5.4.2 Silent Error Handling
+- [ ] DB / audio / notif error tidak crash app
+- [ ] Fallback ke toast ringan
+
+---
+
+### 🧩 EPIC 5.5 — Hardening & Testing
+
+#### 5.5.1 Lifecycle Testing
+- [ ] Minimize app
+- [ ] Laptop sleep
+- [ ] Reload / reopen
+
+#### 5.5.2 Data Validation
+- [ ] Stats akurat
+- [ ] Tidak ada duplicate session
+
+---
+
+✅ **Exit Criteria Sprint 5**
+- Timer tetap akurat
+- Data tidak rusak
+- User bisa percaya app ini
+
+---
+
+## 🚫 Out of Scope (MVP Lock)
+
 - Auth
 - Calendar kompleks
 - Cloud sync
 - AI
+- Analytics berat
 
 ---
 
-## 🏁 Definition of Done (Global)
+## 🏁 Global Definition of Done
 
 Sebuah task dianggap DONE jika:
-- Berfungsi sesuai flow
-- Tidak merusak core flow lain
+- Berfungsi sesuai user flow
+- Tidak merusak flow lain
 - Bisa dipakai tanpa baca dokumentasi
 
 ---
 
 ## 🔥 PM Final Notes
 
-- Jangan ngerjain sprint paralel
-- Jangan nambah scope di tengah sprint
-- Kalau ragu → **balik ke user flow**
+> Fokus bukan soal fitur,  
+> tapi soal **kepercayaan terhadap sistem**.
 
-> Satu hari fokus lebih berharga dari 10 fitur setengah jadi.
+Sprint 5 adalah garis pembatas antara:
+- “project pribadi”
+- dan “produk yang layak dipakai harian”
 
 ---
