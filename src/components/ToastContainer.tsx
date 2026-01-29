@@ -25,7 +25,7 @@ export function ToastContainer() {
           
           <p className="text-sm font-medium flex-1">{toast.message}</p>
 
-          {/* 👇 INI DIA TOMBOL UNDO-NYA */}
+          {/* UNDO */}
           {toast.action && (
             <button
               onClick={() => {

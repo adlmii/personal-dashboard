@@ -11,6 +11,7 @@
     "sql:allow-load",
     "sql:allow-execute",
     "sql:allow-select",
-    "notification:default"
+    "notification:default",
+    "log:default"
   ]
 }

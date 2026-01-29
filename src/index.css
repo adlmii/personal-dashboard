@@ -13,10 +13,11 @@
   --text-inverted: #FFFFFF; /* Putih (buat teks di atas tombol) */
 
   /* Accents */
-  --accent-primary: #F97316;   /* Orange (FOKUS) */
-  --accent-secondary: #3B82F6; /* Blue (NAVIGASI) */
-  --accent-success: #22C55E;   /* Green (SELESAI) */
-  --accent-danger: #EF4444;    /* Red (HAPUS) */
+  --accent-primary: #F97316;        /* Orange (FOKUS) */
+  --accent-primary-hover: #EA580C;  /* Orange Dark (buat hover tombol) */
+  --accent-secondary: #3B82F6;      /* Blue (NAVIGASI) */
+  --accent-success: #22C55E;        /* Green (SELESAI) */
+  --accent-danger: #EF4444;         /* Red (HAPUS) */
 }
 
 /* BASE STYLES */

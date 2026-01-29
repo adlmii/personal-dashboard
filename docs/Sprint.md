@@ -269,13 +269,52 @@ Pastikan app **bisa dipercaya** dalam kondisi real-life.
 
 ---
 
-## 🟦🟦 SPRINT 6 — Re-assert Personal Dashboard Identity
+## 🟦🟦 SPRINT 6 — Clarity, Stability & Execution Mode
 
 ### Goal
-Mengembalikan makna **Dashboard sebagai orientation layer**,  
-bukan tempat kerja penuh distraksi.
+Menghilangkan kebingungan konteks, **mengunci stabilitas aplikasi**,  
+dan memastikan Personal Dashboard terasa **tenang, fokus, dan aman** untuk daily use.
 
-> Sprint ini **tidak menambah fitur**, hanya membagi peran layar dengan jelas.
+Sprint ini **tidak menambah value baru**.  
+Fokusnya: **menghilangkan sumber kebocoran trust** sebelum lanjut ke Sprint 7–8.
+
+---
+
+### 🧩 EPIC 6.0 — Single Instance & App Stability
+
+> Epic ini **harus dikerjakan pertama**, sebelum UX polish atau routing.
+
+#### 6.0.1 Single Instance Lock
+- [ ] App hanya boleh memiliki **1 active window**
+- [ ] Launch kedua:
+  - fokus ke instance pertama
+  - atau ditolak secara graceful
+- [ ] Tidak membuat instance store baru
+
+---
+
+#### 6.0.2 State Safety (Persist + Timer)
+- [ ] Tidak ada duplicate timer tick
+- [ ] Tidak ada double session save
+- [ ] Persisted timer state aman saat:
+  - app di-reopen
+  - app di-focus ulang
+
+---
+
+#### 6.0.3 UX Handling
+- [ ] Tidak ada crash saat app dibuka berulang
+- [ ] Pesan non-teknis dan jelas
+
+Contoh:
+> “Personal Dashboard sudah terbuka.”
+
+---
+
+**Acceptance Criteria**
+- User **tidak pernah** melihat dua window aktif
+- Timer & session **tidak pernah dobel**
+- Tidak ada race condition antar instance
 
 ---
 
@@ -287,12 +326,13 @@ bukan tempat kerja penuh distraksi.
   - Focus
   - Tasks
   - Settings
-- [ ] Active state jelas
+- [ ] Active state jelas & persist
 - [ ] Sidebar collapse / expand (click-based)
 
 **Acceptance Criteria**
 - User langsung paham perbedaan konteks tiap menu
 - Sidebar collapse tidak mengganggu flow
+- Collapse tidak mengubah state halaman aktif
 
 ---
 
@@ -305,6 +345,8 @@ bukan tempat kerja penuh distraksi.
 **Rules**
 - Routing hanya mengubah context
 - Tidak ada business logic di route
+- Tidak ada data mutation di route layer
+- Tidak ada timer / DB logic di App entry
 
 ---
 
@@ -313,12 +355,13 @@ bukan tempat kerja penuh distraksi.
 #### 6.2.1 Dashboard Content Trim
 - [ ] Today Focus → summary view (read-only)
 - [ ] Timer → status ringkas (idle / running + remaining)
-- [ ] Stats → daily overview
+- [ ] Stats → daily overview (hari ini saja)
 
 ❌ Tidak ada:
 - Add task
 - Edit task
 - Full timer control
+- Aksi destruktif
 
 ---
 
@@ -326,12 +369,12 @@ bukan tempat kerja penuh distraksi.
 - [ ] CTA utama:
   - “Start Focus”
   - “Review Tasks”
-- [ ] CTA navigasi ke page yang tepat
+- [ ] CTA hanya navigasi ke page eksekusi
 
 **Acceptance Criteria**
 - Dashboard bisa dipahami < 5 detik
 - Tidak ada scroll panjang
-- Tidak ada decision fatigue
+- Tidak ada decision fatigue (>2 pilihan)
 
 ---
 
@@ -341,7 +384,7 @@ bukan tempat kerja penuh distraksi.
 - [ ] Timer sebagai hero
 - [ ] Active task tunggal
 - [ ] Tidak tampilkan backlog
-- [ ] Tidak tampilkan stats
+- [ ] Tidak tampilkan stats / history
 
 ---
 
@@ -349,10 +392,12 @@ bukan tempat kerja penuh distraksi.
 - [ ] Visual noise diminimalisir
 - [ ] Toast lebih subtle saat focus
 - [ ] Pause / reset jelas dan aman
+- [ ] Aksi destruktif butuh konfirmasi
 
 **Acceptance Criteria**
 - Focus page terasa “sunyi”
 - Tidak ada accidental action
+- User merasa aman untuk deep focus
 
 ---
 
@@ -368,24 +413,76 @@ bukan tempat kerja penuh distraksi.
 #### 6.4.2 Task Flow Polish
 - [ ] Feedback toast konsisten
 - [ ] Undo delete tetap tersedia
-- [ ] Interaction jelas (no ambiguity)
+- [ ] Restore task aman dari duplicate insert
+- [ ] Tidak ada silent mutation
 
 ---
 
-### 🧩 EPIC 6.5 — Copy & Micro-UX Alignment
+### 🧩 EPIC 6.5 — Error Transparency (Moved Up)
+
+> Error handling **naik ke Sprint 6**, bukan Sprint 7.
+
+- [ ] Semua DB mutation dibungkus try/catch
+- [ ] Error → toast ringan (non-blocking)
+- [ ] Tidak ada silent failure di:
+  - add todo
+  - update status
+  - save session
+
+---
+
+### 🧩 EPIC 6.6 — Copy & Micro-UX Alignment
 
 - [ ] Copy Dashboard → observasional
-- [ ] Copy Focus → instruktif
+- [ ] Copy Focus → instruktif & minimal
 - [ ] Copy Tasks → administratif
 - [ ] Tidak ada motivational spam
+- [ ] Tidak ada guilt-driven language
+
+---
+
+### 🧩 EPIC 6.7 — Product Identity Consistency
+
+#### 6.7.1 Product Naming Lock
+- [ ] Nama produk selalu: **Personal Dashboard**
+- [ ] Tidak ada variasi nama lain
+- [ ] Dicek di:
+  - App title
+  - Header
+  - Empty state
+  - Settings
+  - Copy utama
+
+---
+
+#### 6.7.2 Product Definition (Single Sentence)
+- [ ] Satu kalimat definisi produk
+- [ ] Digunakan konsisten di:
+  - About
+  - Internal docs
+  - Onboarding (jika ada)
+
+---
+
+#### 6.7.3 Copy Consistency Pass
+- [ ] Tidak ada copy yang membuat app terasa:
+  - todo app murni
+  - habit tracker
+- [ ] Semua copy reinforce “personal dashboard”
 
 ---
 
 ### ✅ Exit Criteria Sprint 6
-- Dashboard hanya untuk orientasi
-- Focus page untuk eksekusi
-- Tasks page untuk maintenance
-- User paham app ini **personal dashboard, bukan todo app biasa**
+- App **tidak bisa dibuka 2x**
+- Tidak ada duplicate timer / session
+- Tidak ada page dengan fungsi ganda
+- User paham:
+  - Dashboard = orientasi
+  - Focus = eksekusi
+  - Tasks = maintenance
+- Nama **Personal Dashboard** konsisten
+- Error terasa jelas tapi tidak mengganggu
+- App terasa **tenang, stabil, dan bisa dipercaya**
 
 ---
 
@@ -394,27 +491,30 @@ bukan tempat kerja penuh distraksi.
 
 ### Goal
 Meningkatkan rasa **percaya & keterikatan jangka panjang**  
-tanpa menambah kompleksitas.
+tanpa menambah kompleksitas atau beban mental user.
 
 ---
 
 ### 🧩 EPIC 7.1 — Passive Daily Closure
 
 #### 7.1.1 End-of-Day Summary
-- [ ] Summary otomatis (tanpa modal):
+- [ ] Summary otomatis (tanpa input user):
   - Focus minutes
   - Tasks completed
-- [ ] Tidak minta input user
 
 Contoh:
 > “Hari ini: 90 menit fokus · 3 task selesai”
+
+**Rules**
+- Tidak ada popup agresif
+- Summary bersifat informatif, bukan evaluatif
 
 ---
 
 #### 7.1.2 Daily Reset Logic
 - [ ] Today Focus reset otomatis tiap hari
 - [ ] Backlog tetap aman
-- [ ] Tidak menghapus data historis
+- [ ] Data historis tidak pernah dihapus
 
 ---
 
@@ -423,34 +523,36 @@ Contoh:
 #### 7.2.1 Data Integrity Signals
 - [ ] Session incomplete tidak masuk stats
 - [ ] Tidak ada duplicate log
-- [ ] Stats konsisten antar reload
+- [ ] Stats konsisten antar reload / restart
 
 ---
 
 #### 7.2.2 Error Transparency
 - [ ] Silent failure → toast ringan
 - [ ] Tidak ada hard crash
-- [ ] App tetap usable walau ada error minor
+- [ ] App tetap usable walau error minor
 
 ---
 
 ### 🧩 EPIC 7.3 — Settings Finalization (Minimalist)
 
 - [ ] About / App philosophy
-- [ ] Notification explanation
+- [ ] Penjelasan notifikasi
 - [ ] Version info
-- [ ] Tidak ada toggle berlebihan
+- [ ] Tidak ada toggle spekulatif
+- [ ] Tidak ada konfigurasi tidak perlu
 
 ---
 
 ### ✅ Exit Criteria Sprint 7
 - User merasa app “ngerti ritme harian”
 - Tidak perlu mikir harus ngapain
-- App terasa stabil & bisa dipercaya
+- Data terasa aman & konsisten
+- App terasa stabil, dewasa, dan bisa dipercaya
 
 ---
 
-## 🚫 Out of Scope (Tetap Dikunci)
+## 🚫 Out of Scope (TETAP DIKUNCI)
 
 - Auth
 - Cloud sync
@@ -458,16 +560,6 @@ Contoh:
 - Habit tracking
 - Analytics berat
 - AI / automation
-
----
-
-
-## 🏁 Global Definition of Done
-
-Sebuah task dianggap DONE jika:
-- Berfungsi sesuai user flow
-- Tidak merusak flow lain
-- Bisa dipakai tanpa baca dokumentasi
 
 ---
 

@@ -1,54 +1,66 @@
-import { LayoutDashboard, Settings } from "lucide-react";
-import { useNavStore } from "../lib/nav";
+import { LayoutDashboard, Timer, ListTodo, Settings } from "lucide-react";
+import { useNavStore, NavView } from "../lib/nav";
+import logo from "../assets/logo.png";
+import clsx from "clsx";
 
 export function Sidebar() {
   const { currentView, setView } = useNavStore();
 
+  const MenuItem = ({ view, icon: Icon, label }: { view: NavView; icon: any; label: string }) => {
+    const isActive = currentView === view;
+    const isSettings = label === "Settings";
+
+    return (
+      <button
+        onClick={() => setView(view)}
+        className={clsx(
+          "group w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ease-in-out",
+          isActive
+            ? "bg-[var(--accent-primary)] text-[var(--text-inverted)] shadow-md shadow-[var(--accent-primary)]/25 translate-x-1"
+            : "text-[var(--text-muted)] hover:bg-[var(--accent-primary)]/10 hover:text-[var(--accent-primary)] hover:translate-x-1"
+        )}
+      >
+        <Icon 
+          size={20} 
+          className={clsx(
+            "transition-transform duration-500",
+            isActive 
+              ? "text-[var(--text-inverted)]" 
+              : "text-[var(--text-muted)] group-hover:text-[var(--accent-primary)]",
+            isSettings && "group-hover:rotate-90"
+          )} 
+        />
+        {label}
+      </button>
+    );
+  };
+
   return (
     <aside className="w-64 h-screen bg-[var(--bg-card)] border-r border-[var(--bg-subtle)] flex flex-col">
       
-      {/* Header */}
-      <div className="p-6 pb-8">
-        <h1 className="text-xl font-bold text-[var(--accent-primary)] tracking-tight flex items-center gap-2">
-          FocusDeck
-          <span className="text-[10px] bg-[var(--accent-primary)] text-white px-1.5 py-0.5 rounded-full font-medium">MVP</span>
-        </h1>
+      {/* Header / Logo Area */}
+      <div className="flex items-center gap-3 px-6 mb-8 mt-6">
+        <img 
+          src={logo} 
+          alt="FocusDeck Logo" 
+          className="w-8 h-8 rounded-lg shadow-sm object-contain" 
+        />
+        <div>
+          <h1 className="font-bold text-lg text-[var(--text-main)] tracking-tight leading-none">Personal Dashboard</h1>
+        </div>
       </div>
 
-      {/* Main Nav */}
-      <nav className="flex-1 px-4 space-y-1">
-        <button
-          onClick={() => setView('dashboard')}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
-            currentView === 'dashboard'
-              ? "bg-[var(--accent-secondary)] text-white shadow-md shadow-blue-500/20"
-              : "text-[var(--text-muted)] hover:bg-[var(--bg-subtle)] hover:text-[var(--text-main)]"
-          }`}
-        >
-          <LayoutDashboard size={20} />
-          <span className="text-sm font-medium">Dashboard</span>
-        </button>
+      {/* Menu Utama */}
+      <nav className="flex-1 px-4 space-y-2">
+        <MenuItem view="dashboard" icon={LayoutDashboard} label="Dashboard" />
+        <MenuItem view="focus" icon={Timer} label="Focus Mode" />
+        <MenuItem view="tasks" icon={ListTodo} label="Tasks" />
       </nav>
 
-      {/* Footer Nav (Settings) */}
-      <div className="p-4 border-t border-[var(--bg-subtle)]">
-        <button 
-          onClick={() => setView('settings')}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all group ${
-            currentView === 'settings'
-             ? "bg-gray-100 text-[var(--text-main)]"
-             : "text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-subtle)]"
-          }`}
-        >
-          <Settings size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-          Settings
-        </button>
-        
-        <p className="mt-4 text-[10px] text-center text-gray-300">
-          v0.1.0
-        </p>
+      {/* Footer / Settings */}
+      <div className="p-4 border-t border-[var(--bg-subtle)] space-y-4">
+        <MenuItem view="settings" icon={Settings} label="Settings" />
       </div>
-
     </aside>
   );
 }

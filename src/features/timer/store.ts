@@ -25,7 +25,7 @@ interface TimerState {
 
 const DURATIONS = {
   'focus': 25,
-  'short-break': 0.1,
+  'short-break': 5,
   'long-break': 15
 };
 

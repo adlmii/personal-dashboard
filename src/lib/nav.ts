@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
-type View = 'dashboard' | 'settings';
+export type NavView = 'dashboard' | 'focus' | 'tasks' | 'settings';
 
 interface NavState {
-  currentView: View;
-  setView: (view: View) => void;
+  currentView: NavView;
+  setView: (view: NavView) => void;
 }
 
 export const useNavStore = create<NavState>((set) => ({

@@ -1,102 +1,171 @@
 import { useState } from "react";
-import { Trash2, RefreshCw, Info } from "lucide-react";
+import { 
+  Trash2, Shield, AlertTriangle, ChevronDown, 
+  Terminal, Cpu, Heart, Database, Code 
+} from "lucide-react";
 import { initDB } from "../../lib/db";
 import { useToastStore } from "../../lib/toast";
+import clsx from "clsx";
+
+const AccordionItem = ({ icon: Icon, title, subtitle, children, defaultOpen = false }: any) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-sm">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50/50 transition-colors"
+      >
+        <div className="flex items-center gap-4">
+          <div className={`p-2 rounded-lg ${isOpen ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-500'} transition-colors`}>
+            <Icon size={20} />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-800">{title}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p>
+          </div>
+        </div>
+        <div className={`text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+          <ChevronDown size={18} />
+        </div>
+      </button>
+      
+      <div className={clsx(
+        "bg-gray-50/50 border-t border-gray-100 text-sm text-gray-600 transition-all duration-300 ease-in-out overflow-hidden",
+        isOpen ? "max-h-96 opacity-100 p-5" : "max-h-0 opacity-0 p-0"
+      )}>
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export function SettingsPage() {
   const { addToast } = useToastStore();
-  const [isResetting, setIsResetting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const handleReset = async () => {
-    if (!isResetting) {
-      setIsResetting(true);
-      setTimeout(() => setIsResetting(false), 3000);
+  const handleHardReset = async () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
       return;
     }
-
-    // Eksekusi Reset
     try {
       const db = await initDB();
-      // Hapus data (Truncate logic)
       await db.execute("DELETE FROM todos");
       await db.execute("DELETE FROM sessions");
-      
-      addToast("All data wiped successfully", "info");
-      
-      // Reload app biar fresh
-      setTimeout(() => window.location.reload(), 1000);
+      addToast("System reset successful. Rebooting...", "success");
+      setTimeout(() => window.location.reload(), 1500);
     } catch (e) {
-      addToast("Failed to reset data", "error");
+      addToast("Reset failed.", "error");
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in duration-300">
+    <div className="w-full max-w-5xl fade-in pb-12">
       
-      {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-[var(--text-main)]">Settings</h2>
-        <p className="text-[var(--text-muted)]">Preferences & Application Data</p>
-      </div>
+      {/* HEADER */}
+      <header className="mb-8 pl-1">
+        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Settings</h1>
+        <p className="text-gray-500 text-sm mt-1">Preferences & Application Info</p>
+      </header>
 
-      {/* Section 1: App Info (Read-Only) */}
-      <div className="bg-[var(--bg-card)] border border-[var(--bg-subtle)] rounded-xl p-6 space-y-4">
-        <h3 className="font-semibold flex items-center gap-2 text-[var(--text-main)]">
-          <Info size={18} /> About App
-        </h3>
-        
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <p className="text-[var(--text-muted)]">Version</p>
-            <p className="font-medium">v0.1.0 BETA</p>
-          </div>
-          <div>
-            <p className="text-[var(--text-muted)]">Theme</p>
-            <p className="font-medium flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]"></span>
-              Warm Focus
-            </p>
-          </div>
-          <div>
-            <p className="text-[var(--text-muted)]">Developer</p>
-            <p className="font-medium">adlmii</p>
-          </div>
-          <div>
-            <p className="text-[var(--text-muted)]">Tech Stack</p>
-            <p className="font-medium">Tauri v2 + React</p>
-          </div>
-        </div>
-      </div>
+      <div className="space-y-5">
 
-      {/* Section 2: Danger Zone */}
-      <div className="bg-red-50/50 border border-red-100 rounded-xl p-6">
-        <h3 className="font-semibold flex items-center gap-2 text-red-900 mb-2">
-          Danger Zone
-        </h3>
-        <p className="text-sm text-red-700 mb-4">
-          Actions here cannot be undone. Be careful.
-        </p>
-        
-        <button 
-          onClick={handleReset}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all border ${
-            isResetting 
-              ? "bg-red-600 text-white border-red-600 hover:bg-red-700" 
-              : "bg-white text-red-600 border-red-200 hover:bg-red-50"
-          }`}
-        >
-          {isResetting ? (
-            <>
-              <Trash2 size={16} /> Click again to CONFIRM
-            </>
-          ) : (
-            <>
-              <RefreshCw size={16} /> Reset All Data
-            </>
-          )}
-        </button>
-      </div>
+        {/* GROUP 1: GENERAL INFO */}
+        <section className="space-y-3">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider pl-1">General</p>
+          
+          <AccordionItem 
+            icon={Heart} 
+            title="App Philosophy" 
+            subtitle="Why FocusDeck exists"
+          >
+             <p className="leading-relaxed mb-3 text-sm">
+               FocusDeck dibangun dengan prinsip <strong>"Subtract to Add"</strong>. 
+               Kami menghilangkan notifikasi cloud, fitur sosial, dan analitik rumit agar kamu bisa mendapatkan kembali fokusmu.
+             </p>
+             <p className="leading-relaxed text-sm">
+               Simple tools for complex work.
+             </p>
+          </AccordionItem>
 
+          <AccordionItem 
+            icon={Code} 
+            title="Tech Specifications" 
+            subtitle="Version 1.0.0 (Stable)"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-xs text-gray-400 uppercase font-bold mb-1">Engine</p>
+                <div className="flex items-center gap-2 font-medium text-gray-800 p-2.5 bg-white border border-gray-200 rounded-lg text-sm">
+                  <Terminal size={16} className="text-gray-500" /> Tauri v2
+                </div>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase font-bold mb-1">UI Library</p>
+                <div className="flex items-center gap-2 font-medium text-gray-800 p-2.5 bg-white border border-gray-200 rounded-lg text-sm">
+                  <Cpu size={16} className="text-gray-500" /> React + TypeScript
+                </div>
+              </div>
+            </div>
+          </AccordionItem>
+
+          <AccordionItem 
+            icon={Shield} 
+            title="Data & Privacy" 
+            subtitle="Local-first storage architecture"
+          >
+             <div className="flex gap-3 items-start">
+                <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md shrink-0 mt-0.5">
+                  <Database size={16} />
+                </div>
+                <div>
+                   <p className="font-bold text-gray-800 mb-1 text-sm">100% Offline Database</p>
+                   <p className="leading-relaxed text-xs text-gray-600">
+                     Semua data disimpan dalam file <code className="bg-gray-200 px-1 py-0.5 rounded text-gray-700 font-mono">SQLite</code> lokal.
+                     Tidak ada data yang dikirim ke cloud. Aman & Privat.
+                   </p>
+                </div>
+             </div>
+          </AccordionItem>
+        </section>
+
+        {/* GROUP 2: DANGER ZONE */}
+        <section className="space-y-3 pt-4">
+           <div className="flex items-center gap-2 px-1 mb-2">
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Advanced Actions</span>
+              <div className="h-px bg-gray-200 flex-1"></div>
+           </div>
+
+           <div className="bg-white border border-red-100 rounded-xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-md transition-all duration-300 group">
+              <div className="flex gap-4">
+                 <div className="p-3 bg-red-50 text-red-600 rounded-lg h-fit group-hover:scale-105 transition-transform duration-300">
+                    <AlertTriangle size={20} />
+                 </div>
+                 <div>
+                    <h3 className="font-bold text-gray-900 text-sm">Factory Reset</h3>
+                    <p className="text-xs text-gray-500 max-w-md mt-1 leading-relaxed">
+                       Menghapus database lokal secara permanen. Aplikasi akan di-restart dan data hilang selamanya.
+                    </p>
+                 </div>
+              </div>
+
+              <button
+                onClick={handleHardReset}
+                onMouseLeave={() => setConfirmDelete(false)}
+                className={`shrink-0 px-5 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                  confirmDelete
+                    ? "bg-red-600 text-white shadow-lg shadow-red-200 transform scale-105"
+                    : "bg-white border border-red-200 text-red-600 hover:bg-red-50"
+                }`}
+              >
+                <Trash2 size={16} />
+                {confirmDelete ? "Click to Confirm" : "Reset Database"}
+              </button>
+           </div>
+        </section>
+
+      </div>
     </div>
   );
 }

@@ -11,6 +11,7 @@ interface DashboardState {
   stats: DailyStats;
   isLoading: boolean;
   loadStats: () => Promise<void>;
+  getStatsForDate: (dateStr: string) => Promise<{ focusMinutes: number, tasksCompleted: number }>;
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
@@ -26,24 +27,22 @@ export const useDashboardStore = create<DashboardState>((set) => ({
     const db = await initDB();
 
     try {
-      // Total Menit Fokus Hari Ini
+      // Query Hari Ini
       const sessionResult = await db.select<any[]>(`
         SELECT SUM(duration) as total 
         FROM sessions 
-        WHERE date(started_at) = date('now', 'localtime')
+        WHERE date(started_at, 'localtime') = date('now', 'localtime')
       `);
       const focusMinutes = sessionResult[0]?.total || 0;
 
-      // Task Selesai Hari Ini
       const doneResult = await db.select<any[]>(`
         SELECT COUNT(*) as count 
         FROM todos 
         WHERE status = 'done' 
-        AND date(completed_at) = date('now', 'localtime')
+        AND date(completed_at, 'localtime') = date('now', 'localtime')
       `);
       const tasksCompleted = doneResult[0]?.count || 0;
 
-      // Sisa Task (Backlog + Today)
       const activeResult = await db.select<any[]>(`
         SELECT COUNT(*) as count 
         FROM todos 
@@ -64,5 +63,33 @@ export const useDashboardStore = create<DashboardState>((set) => ({
       console.error("Gagal load stats:", err);
       set({ isLoading: false });
     }
+  },
+
+  getStatsForDate: async (dateStr) => {
+    // dateStr format: 'YYYY-MM-DD' (misal: '2025-01-29')
+    const db = await initDB();
+    try {
+      const sessionResult = await db.select<any[]>(`
+        SELECT SUM(duration) as total 
+        FROM sessions 
+        WHERE date(started_at, 'localtime') = $1
+      `, [dateStr]);
+      
+      const doneResult = await db.select<any[]>(`
+        SELECT COUNT(*) as count 
+        FROM todos 
+        WHERE status = 'done' 
+        AND date(completed_at, 'localtime') = $1
+      `, [dateStr]);
+
+      return {
+        focusMinutes: sessionResult[0]?.total || 0,
+        tasksCompleted: doneResult[0]?.count || 0
+      };
+    } catch (err) {
+      console.error("Gagal get history stats:", err);
+      return { focusMinutes: 0, tasksCompleted: 0 };
+    }
   }
+
 }));
