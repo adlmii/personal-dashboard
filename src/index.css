@@ -48,3 +48,38 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #475569; /* slate-600 */
 }
+
+/* Container utama titlebar */
+.titlebar {
+  height: 32px;
+  user-select: none;
+}
+
+.titlebar-drag {
+  -webkit-app-region: drag;
+}
+
+.mac-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag;
+  transition: all 0.2s ease-in-out;
+}
+
+.mac-btn svg {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.titlebar:hover .mac-btn svg {
+  opacity: 1;
+}
+
+.mac-close { background-color: #FF5F56; }
+.mac-min { background-color: #FFBD2E; }
+.mac-max { background-color: #27C93F; }

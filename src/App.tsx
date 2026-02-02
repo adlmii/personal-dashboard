@@ -10,6 +10,7 @@ import { useNavStore } from "./lib/nav";
 import { useTodoStore } from "./features/todo/store";
 import { useToastStore } from "./lib/toast";
 import { useDashboardStore } from "./features/dashboard/store";
+import { TitleBar } from "./components/TitleBar";
 
 function App() {
   const [isDbReady, setIsDbReady] = useState(false);
@@ -64,8 +65,10 @@ useEffect(() => {
 
   return (
     <div className="flex h-screen bg-[var(--bg-main)] text-[var(--text-main)] overflow-hidden font-sans">
+      <TitleBar />
       
-      <Sidebar />
+      <div className="flex flex-1 mt-8 overflow-hidden">
+        <Sidebar />
 
       <main className="flex-1 overflow-y-auto p-8 relative custom-scrollbar">
         
@@ -91,7 +94,7 @@ useEffect(() => {
 
         </div>
       </main>
-
+      </div>
       <ToastContainer />
     </div>
   );

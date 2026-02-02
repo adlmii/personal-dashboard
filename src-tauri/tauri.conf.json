@@ -15,7 +15,8 @@
         "title": "personal-dashboard",
         "width": 1200,
         "height": 768,
-        "center": true
+        "center": true,
+        "decorations": false
       }
     ],
     "security": {
